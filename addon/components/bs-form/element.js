@@ -337,7 +337,17 @@ export default class FormElement extends FormGroup {
   // This shouldn't be an argument. It's only an argument because tests rely on
   // setting it as an argument. See https://github.com/kaliber5/ember-bootstrap/issues/1338
   // for details.
-  @arg errors;
+  get errors() {
+    // Keep previous behaviour
+    if (this.args.errors !== undefined) {
+      return this.args.errors;
+    }
+    // Look for ember-data errors
+    if (this.args.property && this.args.model) {
+      return this.args.model.errors.get(this.args.property)?.mapBy('message');
+    }
+    return undefined;
+  }
 
   /**
    * @property hasErrors
