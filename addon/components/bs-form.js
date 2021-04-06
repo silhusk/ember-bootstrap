@@ -470,7 +470,8 @@ export default class Form extends Component {
                 schedule('afterRender', () => this.set('showAllValidations', undefined));
               }
             });
-        },
+      })
+      .catch(
         (error) => {
           return RSVP.resolve()
             .then(() => {
